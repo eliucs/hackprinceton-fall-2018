@@ -1,7 +1,7 @@
 import random
 from .word_list import WORD_LIST
 
-def generate_random_words(n):
+def generate_random_words(n = 1):
   if n < 1:
     raise RuntimeError('n must be a number >= 1')
 

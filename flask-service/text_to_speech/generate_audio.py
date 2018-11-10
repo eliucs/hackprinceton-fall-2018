@@ -6,7 +6,7 @@ words) to an mp3 file.
 import os
 from google.cloud import texttospeech
 
-def generate_audio_from_text(text, outputFile=None):
+def generate_audio_from_text(text, outputFile = None):
   # Setup credentials from file
   if 'GOOGLE_APPLICATION_CREDENTIALS' not in os.environ:
     path = os.path.dirname(os.path.abspath(__file__)) + '/config/audio-captcha-credentials.json'

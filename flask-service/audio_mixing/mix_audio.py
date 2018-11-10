@@ -1,16 +1,23 @@
 import io
+import os
+import random
 from pydub import AudioSegment
 
-def mix_audio_files(audioFiles):
-  # Note that audioFiles are a list of binary audio files
-  if len(audioFiles) == 1:
-    return AudioSegment.from_file(io.BytesIO(audioFiles[0])).export('test.mp3',
-      format='mp3')
+def mix_audio_files(audioTextBinary, n = 2):
+  if n < 1:
+    raise RuntimeError('n must be >= 1, at least one audio file must be mixed in')
 
-  audio = list(map(lambda s: AudioSegment.from_file(io.BytesIO(s)), audioFiles))
+  # Get list of soundbite files
+  path = os.path.dirname(os.path.abspath(__file__)) + '/sample_soundbites'
+  soundbiteFiles = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
 
-  combined = audio[0]
-  for i in range(1, len(audio)):
-    combined = combined.overlay(audio[i])
+  # Randomly choose n soundbite files
+  soundbiteSamples = random.sample(soundbiteFiles, n)
 
-  combined.export("combined.mp3", format='mp3')
+  # Combine audio files
+  combinedAudio = AudioSegment.from_file(io.BytesIO(audioTextBinary))
+  for soundbiteFile in soundbiteSamples:
+    audioLayer = AudioSegment.from_file(path + '/' + soundbiteFile)
+    combinedAudio = combinedAudio.overlay(audioLayer)
+
+  combinedAudio.export("combinedAudio.mp3", format='mp3')
