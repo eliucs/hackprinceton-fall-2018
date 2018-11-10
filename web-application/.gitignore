@@ -1,0 +1,30 @@
+# General
+.DS_Store
+.vscode
+.idea
+/node_modules
+
+# Logs
+logs
+*.log
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Archiving, Testing
+archive
+testing
+playground
+downloads
+temp
+out
+
+# Temporary
+*.tmp
+
+# Build
+/dist/index.html
+/dist/bundle-client.js
+/dist/bundle-client.js.map
+/dist/main.css
+/dist/main.css.map
