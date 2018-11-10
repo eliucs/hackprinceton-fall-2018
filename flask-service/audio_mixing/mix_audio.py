@@ -8,23 +8,47 @@ indecipherable by Google Cloud Speech API.
 import io
 import os
 import random
+import urllib.request
+
+from google.cloud import storage
 from pydub import AudioSegment
 
-def mix_audio_files(audioTextBinary, n = 2):
+BUCKET_NAME = 'audio-captcha'
+MAX_SOUNDBITE_NUM = 400
+
+def download_blob(bucketName, srcBlobName):
+  client = storage.Client()
+  bucket = client.get_bucket(bucketName)
+  blob = bucket.blob(srcBlobName)
+  return blob.download_as_string()
+
+def mix_audio_files(audioTextBinary, n = 3, useTestSoundBites = False):
   if n < 1:
     raise RuntimeError('n must be >= 1, at least one audio file must be mixed in')
 
-  # Get list of soundbite files
-  path = os.path.dirname(os.path.abspath(__file__)) + '/sample_soundbites'
-  soundbiteFiles = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
+  if useTestSoundBites:
+    # Get list of soundbite files
+    path = os.path.dirname(os.path.abspath(__file__)) + '/sample_soundbites'
+    soundbiteFiles = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
 
-  # Randomly choose n soundbite files
-  soundbiteSamples = random.sample(soundbiteFiles, n)
+    # Randomly choose n soundbite files
+    soundbiteSamples = random.sample(soundbiteFiles, n)
+  else:
+    path = os.path.dirname(os.path.abspath(__file__)) + '/temp_soundbites'
+    indices = random.sample(range(0, MAX_SOUNDBITE_NUM), n)
+    soundbiteSamples = []
+    for i in indices:
+      fileName = '{}.mp3'.format(i)
+      blobData = download_blob(BUCKET_NAME, fileName)
+      soundbiteSamples.append(blobData)
 
   # Combine audio files
   combinedAudio = AudioSegment.from_file(io.BytesIO(audioTextBinary))
-  for soundbiteFile in soundbiteSamples:
-    audioLayer = AudioSegment.from_file(path + '/' + soundbiteFile)
+  for i, soundbiteFile in enumerate(soundbiteSamples):
+    if useTestSoundBites:
+      audioLayer = AudioSegment.from_file(path + '/' + soundbiteFile)
+    else:
+      audioLayer = AudioSegment.from_file(io.BytesIO(soundbiteFile))
     combinedAudio = combinedAudio.overlay(audioLayer)
 
   combinedAudio.export("combinedAudio.mp3", format='mp3')
