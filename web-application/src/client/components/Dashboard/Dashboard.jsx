@@ -5,7 +5,7 @@ import { sectionHeader } from './styles.scss';
 import { Button, Container, Col, Row } from 'reactstrap';
 
 const Dashboard = props => (
-  <Container>
+  <Container fluid>
     <Row>
       <Col md="2" />
       <Col md="8">
