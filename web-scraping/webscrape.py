@@ -43,28 +43,30 @@ async def web_scrape(urls, debug = False):
 
   return audioUrls
 
+# Uploads binary object to Google Cloud Storage
+def upload_blob(bucketName, srcFileName, destBlobName):
+  client = storage.Client()
+  bucket = client.get_bucket(bucketName)
+  blob = bucket.blob(destBlobName)
+  blob.upload_from_filename(srcFileName)
+  print('Uploaded:', srcFileName)
+  print('Public URL:', 'https://storage.cloud.google.com/{}/{}'.format(bucketName, destBlobName))
+
 # Download audio files, then upload them to Google Cloud Storage
 def download_audio_files(urls):
   BUCKET_NAME = 'audio-captcha'
-  client = storage.Client()
-  bucket = client.get_bucket(BUCKET_NAME)
+  MAX_NUM_AUDIO_FILES = 400
 
   for i, url in enumerate(urls):
-    response = urllib.request.urlopen(url)
-    # data = response.read()
-    # contentType = response.getheader('Content-Type')
     fileName = '{}.mp3'.format(i)
-    blob = bucket.blob(fileName)
+    with urllib.request.urlopen(url) as response, open(fileName, 'wb') as outFile:
+      data = response.read()
+      outFile.write(data)
+    upload_blob(BUCKET_NAME, fileName, fileName)
+    os.remove(fileName)
 
-    publicUrl = blob.upload_from_file(
-      response.read(),
-      content_type = response.getheader('Content-Type')
-    )
-
-    print(public_url)
-
-    # fileName = '{}.mp3'.format(i)
-    # upload_blob(BUCKET_NAME, fileName, data)
+    if i == MAX_NUM_AUDIO_FILES:
+      break
 
 def main():
   URLS_TO_SCRAPE_PATH = './pickle-files/urlsToScrape.p'
