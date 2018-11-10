@@ -1,6 +1,3 @@
 [submodule "flask-service"]
 	path = flask-service
 	url = ./flask-service
-[submodule "web-server"]
-	path = web-server
-	url = ./web-server
