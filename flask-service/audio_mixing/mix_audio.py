@@ -1,3 +1,10 @@
+"""
+Mixes the audio text binary file with multiple random layers of background
+audio. Uses a stdlib function to fetch multiple urls to audio files, then makes
+requests to download those files. Repeatedly mixes audio files until it is
+indecipherable by Google Cloud Speech API.
+"""
+
 import io
 import os
 import random
