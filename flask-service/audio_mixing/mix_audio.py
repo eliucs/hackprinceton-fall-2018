@@ -38,7 +38,7 @@ def mix_audio_files(audioTextBinary, n = 3, useTestSoundBites = False, outputFil
     indices = random.sample(range(0, MAX_SOUNDBITE_NUM), n)
     soundbiteSamples = []
     for i in indices:
-      fileName = '{}.mp3'.format(i)
+      fileName = 'private/{}.mp3'.format(i)
       blobData = download_blob(BUCKET_NAME, fileName)
       soundbiteSamples.append(blobData)
 

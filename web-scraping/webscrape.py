@@ -62,7 +62,7 @@ def download_audio_files(urls):
     with urllib.request.urlopen(url) as response, open(fileName, 'wb') as outFile:
       data = response.read()
       outFile.write(data)
-    upload_blob(BUCKET_NAME, fileName, fileName)
+    upload_blob(BUCKET_NAME, fileName, 'private/' + fileName)
     os.remove(fileName)
 
     if i == MAX_NUM_AUDIO_FILES:
