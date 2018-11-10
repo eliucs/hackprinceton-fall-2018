@@ -26,3 +26,14 @@
 :local(.sectionRow) {
   margin-bottom: 1em;
 }
+
+:local(.containerIpAddresses) {
+  height: 15em;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+:local(.composableMap) {
+  width: 100%;
+  height: auto;
+}

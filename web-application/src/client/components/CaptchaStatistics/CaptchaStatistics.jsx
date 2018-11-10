@@ -2,8 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-import { Container, Col, Row } from 'reactstrap';
+import { Container, Col, Row, Table, Button } from 'reactstrap';
 import { Line } from 'react-chartjs-2';
+import {
+  ComposableMap,
+  ZoomableGroup,
+  Geographies,
+  Geography,
+} from 'react-simple-maps';
+import { scaleLinear } from 'd3-scale';
+
+import WORLD_JSON from './world.json';
 
 import {
   card,
@@ -13,11 +22,15 @@ import {
   colorSuccess,
   colorFailure,
   sectionRow,
+  containerIpAddresses,
+  composableMap,
 } from './styles.scss';
 
 function randomData() {
   return Math.floor(Math.random() * 5);
 }
+
+const popScale = scaleLinear().domain([0, 10]).range(['#CFD8DC', '#37474F']);
 
 const dummyData = {
   labels: [
@@ -41,8 +54,8 @@ const dummyData = {
         randomData(),
         randomData(),
       ],
-      borderColor: '#01579B',
-      backgroundColor: '#0288D1',
+      borderColor: '#29B6F6',
+      backgroundColor: '#B3E5FC',
     },
   ],
 };
@@ -74,8 +87,29 @@ const dummyOptions = {
   },
 };
 
+const dummyIp = [
+  '15.127.38.196',
+  '84.34.228.132',
+  '59.52.145.31',
+  '65.234.135.18',
+  '214.49.118.214',
+  '99.217.223.115',
+  '30.170.197.67',
+  '5.89.120.66',
+  '225.31.78.15',
+  '139.216.19.140',
+];
+
 const CaptchaStatistics = props => (
   <Container fluid>
+    <Row>
+      <Col md="2" />
+      <Col md="8">
+        <Button color="primary">Back</Button>
+      </Col>
+      <Col md="2" />
+    </Row>
+
     {/* Success/Failure Rate */}
     <Row className={sectionRow}>
       <Col md="2" />
@@ -117,6 +151,47 @@ const CaptchaStatistics = props => (
       <Col md="8">
         <div className={card}>
           <div className={cardTitle}>Worldwide Traffic Data</div>
+
+          <ComposableMap
+            projectionConfig={{
+              scale: 200,
+              rotation: [-11, 0, 0],
+            }}
+            width={980}
+            height={551}
+            className={composableMap}
+          >
+            <Geographies geography={WORLD_JSON}>
+              {(geographies, projection) => geographies.map((geography, i) => (
+                <Geography
+                  key={i}
+                  geography={geography}
+                  projection={projection}
+                  onClick={() => {}}
+                  style={{
+                    default: {
+                      fill: popScale(Math.round(Math.random() * 10)),
+                      stroke: '#607D8B',
+                      strokeWidth: 0.75,
+                      outline: 'none',
+                    },
+                    hover: {
+                      fill: '#263238',
+                      stroke: '#607D8B',
+                      strokeWidth: 0.75,
+                      outline: 'none',
+                    },
+                    pressed: {
+                      fill: '#263238',
+                      stroke: '#607D8B',
+                      strokeWidth: 0.75,
+                      outline: 'none',
+                    },
+                  }}
+                />
+              ))}
+            </Geographies>
+          </ComposableMap>
         </div>
       </Col>
       <Col md="2" />
@@ -128,6 +203,28 @@ const CaptchaStatistics = props => (
       <Col md="8">
         <div className={card}>
           <div className={cardTitle}>Traffic by IP Address</div>
+          <div className={containerIpAddresses}>
+            <Table size="sm">
+              <thead>
+                <tr>
+                  <th>IP Address</th>
+                  <th>Date Clicked</th>
+                  <th>Country</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  dummyIp.map((ip, i) => (
+                    <tr key={i}>
+                      <td>{ip}</td>
+                      <td>01-01-2018</td>
+                      <td>United States</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </Table>
+          </div>
         </div>
       </Col>
       <Col md="2" />
@@ -138,12 +235,3 @@ const CaptchaStatistics = props => (
 CaptchaStatistics.propTypes = {};
 
 export default CaptchaStatistics;
-
-// TODO: back button
-// <Row>
-// <Col md="2" />
-// <Col md="8">
-//   Back
-// </Col>
-// <Col md="2" />
-// </Row>
