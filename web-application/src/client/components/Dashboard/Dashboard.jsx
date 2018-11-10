@@ -1,11 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { appStyles } from './styles.scss';
+import { sectionHeader } from './styles.scss';
+
+import { Button, Container, Col, Row } from 'reactstrap';
 
 const Dashboard = props => (
-  <div className={appStyles}>
-    <h1>{props.title}</h1>
-  </div>
+  <Container>
+    <Row>
+      <Col md="2" />
+      <Col md="8">
+        <div className={sectionHeader}>Create new audioCAPTCHA</div>
+        <Button color="primary">+ Create New</Button>
+      </Col>
+      <Col md="2" />
+    </Row>
+
+    <Row>
+      <Col md="2" />
+      <Col md="8">
+        <div className={sectionHeader}>My Existing audioCAPTCHA</div>
+      </Col>
+      <Col md="2" />
+    </Row>
+  </Container>
 );
 
 Dashboard.propTypes = {

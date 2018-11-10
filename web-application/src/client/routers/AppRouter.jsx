@@ -8,6 +8,7 @@ import {
 
 import MainPage from 'components/MainPage';
 import Dashboard from 'components/Dashboard';
+import CaptchaStatistics from 'components/CaptchaStatistics';
 import SignupPage from 'components/SignupPage';
 
 /**
@@ -31,7 +32,7 @@ const AppRouter = () => (
 
         <Route
           path="/dashboard/:captchaId"
-          component={() => <Dashboard title="dashboard" />}
+          component={() => <CaptchaStatistics title="captcha statistics" />}
           exact
         />
 
