@@ -22,7 +22,7 @@ def download_blob(bucketName, srcBlobName):
   blob = bucket.blob(srcBlobName)
   return blob.download_as_string()
 
-def mix_audio_files(audioTextBinary, n = 3, useTestSoundBites = False):
+def mix_audio_files(audioTextBinary, n = 3, useTestSoundBites = False, outputFileName = None):
   if n < 1:
     raise RuntimeError('n must be >= 1, at least one audio file must be mixed in')
 
@@ -49,6 +49,13 @@ def mix_audio_files(audioTextBinary, n = 3, useTestSoundBites = False):
       audioLayer = AudioSegment.from_file(path + '/' + soundbiteFile)
     else:
       audioLayer = AudioSegment.from_file(io.BytesIO(soundbiteFile))
+
+    # Reduce audio by 8db
+    audioLayer -= 8
+
     combinedAudio = combinedAudio.overlay(audioLayer)
 
-  combinedAudio.export("combinedAudio.mp3", format='mp3')
+  if outputFileName:
+    combinedAudio.export(outputFileName, format='mp3')
+
+  return combinedAudio

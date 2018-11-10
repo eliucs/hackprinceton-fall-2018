@@ -15,7 +15,7 @@ def index():
   words = random_words.generate_random_words(3)
   print(words)
   audioTextBinary = generate_audio.generate_audio_from_text(words)
-  combinedAudio = mix_audio.mix_audio_files(audioTextBinary, 2)
+  combinedAudio = mix_audio.mix_audio_files(audioTextBinary, 2, False, 'combined.mp3')
 
   return render_template('index.html')
 
