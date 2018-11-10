@@ -17,7 +17,7 @@ const App = (
 );
 
 store.subscribe(() => {
-  console.log('action', store.getState());
+  // console.log('action', store.getState());
 });
 
 ReactDOM.render(App, document.getElementById('react-root'));

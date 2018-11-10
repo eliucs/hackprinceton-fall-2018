@@ -1,4 +1,6 @@
 import React from 'react';
+
+import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
@@ -274,8 +276,6 @@ class CaptchaStatistics extends React.Component {
   }
 }
 
-CaptchaStatistics.propTypes = {};
+CaptchaStatisticsContainer.propTypes = {};
 
-export default CaptchaStatistics;
-
-// geography.properties.name
+export default CaptchaStatisticsContainer;
