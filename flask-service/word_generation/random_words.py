@@ -1,5 +1,5 @@
 import random
-from word_list import WORD_LIST
+from .word_list import WORD_LIST
 
 def generate_random_words(n):
   if n < 1:

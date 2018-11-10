@@ -9,7 +9,8 @@ from google.cloud import texttospeech
 def generate_audio_from_text(text, outputFile=None):
   # Setup credentials from file
   if 'GOOGLE_APPLICATION_CREDENTIALS' not in os.environ:
-    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'config/audio-captcha-credentials.json'
+    path = os.path.dirname(os.path.abspath(__file__)) + '/config/audio-captcha-credentials.json'
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = path
 
   # Instantiates a client
   client = texttospeech.TextToSpeechClient()
