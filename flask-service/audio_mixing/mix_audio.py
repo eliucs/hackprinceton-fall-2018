@@ -44,7 +44,7 @@ def mix_audio_files(audioTextBinary, n = 3, useTestSoundBites = False):
 
   # Combine audio files
   combinedAudio = AudioSegment.from_file(io.BytesIO(audioTextBinary))
-  for i, soundbiteFile in enumerate(soundbiteSamples):
+  for soundbiteFile in soundbiteSamples:
     if useTestSoundBites:
       audioLayer = AudioSegment.from_file(path + '/' + soundbiteFile)
     else:
