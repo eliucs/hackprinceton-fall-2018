@@ -50,8 +50,8 @@ def mix_audio_files(audioTextBinary, n = 3, useTestSoundBites = False, outputFil
     else:
       audioLayer = AudioSegment.from_file(io.BytesIO(soundbiteFile))
 
-    # Reduce audio by 8db
-    audioLayer -= 8
+    # Reduce audio by 5db
+    audioLayer -= 5
 
     combinedAudio = combinedAudio.overlay(audioLayer)
 
