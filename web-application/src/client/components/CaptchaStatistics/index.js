@@ -1,3 +1,3 @@
-import CaptchaStatisticsContainer from './CaptchaStatisticsContainer';
+import CaptchaStatistics from './CaptchaStatistics';
 
-export default CaptchaStatisticsContainer;
+export default CaptchaStatistics;
