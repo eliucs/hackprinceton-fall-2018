@@ -1,6 +1,9 @@
 import React from 'react';
 import { Container } from 'reactstrap';
 import { Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router';
+import _ from 'lodash';
+import moment from 'moment';
 
 import NavBar from 'components/NavBar';
 import BackButton from './BackButton';
@@ -13,87 +16,108 @@ import {
   containerCaptchaStatistics,
 } from './styles.scss';
 
-function randomData() {
-  return Math.floor(Math.random() * 5);
-}
-
-const dummyTimeseriesData = {
-  labels: [
-    '01-01-2018',
-    '01-02-2018',
-    '01-03-2018',
-    '01-04-2018',
-    '01-05-2018',
-    '01-06-2018',
-    '01-07-2018',
-  ],
-  datasets: [
-    {
-      label: 'Traffic',
-      data: [
-        randomData(),
-        randomData(),
-        randomData(),
-        randomData(),
-        randomData(),
-        randomData(),
-        randomData(),
-      ],
-      borderColor: '#29B6F6',
-      backgroundColor: '#B3E5FC',
-    },
-  ],
+/**
+ * Returns the mapping of country code to frequency.
+ *
+ * @param {Array} traffic
+ */
+const getMapCountryToFrequency = traffic => {
+  const result = {};
+  traffic.forEach(item => {
+    result[item.countryCode] = (result[item.countryCode] || 0) + 1;
+  });
+  return result;
 };
 
-const dummyIpData = [
-  {
-    ip: '15.127.38.196',
-    date: '01-01-2018',
-    countryName: 'United States',
-  },
-  {
-    ip: '15.127.38.196',
-    date: '01-01-2018',
-    countryName: 'United States',
-  },
-  {
-    ip: '15.127.38.196',
-    date: '01-01-2018',
-    countryName: 'United States',
-  },
-  {
-    ip: '15.127.38.196',
-    date: '01-01-2018',
-    countryName: 'United States',
-  },
-  {
-    ip: '15.127.38.196',
-    date: '01-01-2018',
-    countryName: 'United States',
-  },
-];
+/**
+ * Returns array with IP data.
+ *
+ * @param {Array} traffic
+ */
+const getIpData = traffic => (
+  traffic.map(item => ({
+    ...item,
+    date: moment(item.date).format('MMMM DD, YYYY'),
+  }))
+);
 
-const mapCountryToFreq = {
-  USA: 20,
-  CAN: 15,
-  AUS: 10,
-  RUS: 5,
-  CHN: 2,
+/**
+ * Returns an array of dates of the past 7 days.
+ */
+const getPastWeekDates = () => {
+  const result = [];
+  let currTime = moment();
+  for (let i = 0; i < 7; i++) {
+    result.push(currTime.format('MM-DD-YYYY'));
+    currTime = currTime.subtract('1', 'day');
+  }
+  return result;
 };
 
-const dummySuccess = 0;
-const dummyFailure = 0;
+/**
+ * Gets the time series data from the traffic log.
+ *
+ * @param {Object} traffic
+ */
+const getTimeSeriesData = traffic => {
+  const labels = getPastWeekDates();
+  const mapDatesToFreq = {};
+  traffic.forEach(item => {
+    const date = moment(item.date).format('MM-DD-YYYY');
+    mapDatesToFreq[date] = (mapDatesToFreq[date] || 0) + 1;
+  });
+  const data = labels.map(date => (mapDatesToFreq[date] || 0));
+
+  return {
+    labels,
+    datasets: [
+      {
+        label: 'Traffic',
+        data,
+        borderColor: '#29B6F6',
+        backgroundColor: '#B3E5FC',
+      },
+    ],
+  };
+};
 
 class CaptchaStatistics extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       goBack: false,
+      error: false,
+      numSuccess: 0,
+      numFailure: 0,
+      mapCountryToFreq: {},
+      ipData: [],
+      timeSeriesData: {},
     };
   }
 
   componentDidMount() {
     // Make requests to get the data from Firebase
+    const { captchaId } = this.props.match.params;
+    fetch(`/captcha/${captchaId}`)
+      .then(result => result.json())
+      .then(result => {
+        if (_.isEmpty(result)) {
+          this.setState({ error: true });
+        } else {
+          const { numSuccess, numFailure, traffic } = result;
+
+          this.setState({
+            numSuccess,
+            numFailure,
+            mapCountryToFreq: getMapCountryToFrequency(traffic),
+            ipData: getIpData(traffic),
+            timeSeriesData: getTimeSeriesData(traffic),
+          });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   handleBackClick = () => {
@@ -101,7 +125,7 @@ class CaptchaStatistics extends React.Component {
   };
 
   render() {
-    if (this.state.goBack) {
+    if (this.state.goBack || this.state.error) {
       return (
         <Redirect to="/dashboard" />
       );
@@ -118,23 +142,28 @@ class CaptchaStatistics extends React.Component {
           <SuccessFailureRatesDisplay
             titleSuccess="Success Rate"
             titleFailure="Failure Rate"
-            numSuccess={dummySuccess}
-            numFailure={dummyFailure}
+            numSuccess={this.state.numSuccess}
+            numFailure={this.state.numFailure}
           />
 
           <TrafficTimeseries
             title="Traffic Over Time"
-            data={dummyTimeseriesData}
+            data={this.state.timeSeriesData}
           />
 
-          <WorldwideTrafficData
-            title="Worldwide Traffic Data"
-            mapCountryToFreq={mapCountryToFreq}
-          />
+          {
+            !_.isEmpty(this.state.mapCountryToFreq)
+            && (
+              <WorldwideTrafficData
+                title="Worldwide Traffic Data"
+                mapCountryToFreq={this.state.mapCountryToFreq}
+              />
+            )
+          }
 
           <IPAddressListings
             title="Traffic by IP Address"
-            data={dummyIpData}
+            data={this.state.ipData}
             maxDataLimit={100}
           />
         </Container>
@@ -143,4 +172,4 @@ class CaptchaStatistics extends React.Component {
   }
 }
 
-export default CaptchaStatistics;
+export default withRouter(CaptchaStatistics);

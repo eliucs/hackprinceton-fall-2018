@@ -19,6 +19,9 @@ downloads
 temp
 out
 
+# Config
+config
+
 # Temporary
 *.tmp
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { Link } from 'react-router-dom';
 import {
   Container,
@@ -45,7 +46,7 @@ const ExistingCaptchaListings = props => (
                           {captchaData.id}
                         </Link>
                       </td>
-                      <td>{captchaData.dateCreated}</td>
+                      <td>{moment(captchaData.dateCreated).format('MMMM DD, YYYY')}</td>
                     </tr>
                   ))
                 }

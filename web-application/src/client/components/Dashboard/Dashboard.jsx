@@ -10,33 +10,24 @@ import {
   containerDashboard,
 } from './styles.scss';
 
-const dummyCaptchaData = [
-  {
-    id: uuid(),
-    dateCreated: '01-01-2018',
-  },
-  {
-    id: uuid(),
-    dateCreated: '01-02-2018',
-  },
-  {
-    id: uuid(),
-    dateCreated: '01-03-2018',
-  },
-  {
-    id: uuid(),
-    dateCreated: '01-04-2018',
-  },
-  {
-    id: uuid(),
-    dateCreated: '01-05-2018',
-  },
-];
-
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      data: [],
+    };
+  }
+
+  componentDidMount() {
+    // Make request to server for the data:
+    fetch('/captcha-listing')
+      .then(result => result.json())
+      .then(data => {
+        this.setState({ data });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   handleCreateNewCaptcha = () => {
@@ -55,7 +46,7 @@ class Dashboard extends React.Component {
 
           <ExistingCaptchaListings
             title="My Existing audioCAPTCHA"
-            data={dummyCaptchaData}
+            data={this.state.data}
           />
         </Container>
       </div>

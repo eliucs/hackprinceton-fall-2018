@@ -29,6 +29,7 @@
     "d3-scale": "^2.1.2",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
+    "firebase": "^5.5.8",
     "history": "^4.7.2",
     "jquery": "^3.3.1",
     "jsonwebtoken": "7.1.9",

@@ -7,10 +7,12 @@ import {
 } from 'react-router-dom';
 
 import NavBar from 'components/NavBar';
-import MainPage from 'components/MainPage';
 import Dashboard from 'components/Dashboard';
 import CaptchaStatistics from 'components/CaptchaStatistics';
-import SignupPage from 'components/SignupPage';
+
+// TODO: Finish implementing these later
+// import MainPage from 'components/MainPage';
+// import SignupPage from 'components/SignupPage';
 
 /**
  * Renders the AppRouter stateless functional component.
@@ -23,6 +25,8 @@ class AppRouter extends React.Component {
     };
   }
 
+  // TODO: For now, redirect to /dashboard, implement login and signup system later
+
   render() {
     return (
       <BrowserRouter>
@@ -31,13 +35,13 @@ class AppRouter extends React.Component {
           <Switch>
             <Route
               path="/"
-              component={() => <MainPage />}
+              component={() => <Redirect to="/dashboard" />}
               exact
             />
 
             <Route
               path="/signup"
-              component={() => <SignupPage />}
+              component={() => <Redirect to="/dashboard" />}
               exact
             />
 
@@ -65,3 +69,16 @@ class AppRouter extends React.Component {
 }
 
 export default AppRouter;
+
+// Old routes
+// <Route
+//   path="/"
+//   component={() => <MainPage />}
+//   exact
+// />
+
+// <Route
+//   path="/signup"
+//   component={() => <SignupPage />}
+//   exact
+// />

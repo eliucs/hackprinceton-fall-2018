@@ -45,9 +45,9 @@ const IPAddressListings = props => {
                   {
                     data.map((ipData, i) => (
                       <tr key={i}>
-                        <td>{ipData.ip}</td>
+                        <td>{ipData.ipAddress}</td>
                         <td>{ipData.date}</td>
-                        <td>{ipData.countryName}</td>
+                        <td>{ipData.countryCode}</td>
                       </tr>
                     ))
                   }
