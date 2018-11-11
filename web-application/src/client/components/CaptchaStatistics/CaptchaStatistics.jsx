@@ -89,13 +89,22 @@ class CaptchaStatistics extends React.Component {
     this.state = {};
   }
 
+  handleBackClick = () => {
+    console.log('test');
+  };
+
   render() {
     return (
       <Container fluid>
         <Row>
           <Col md="2" />
           <Col md="8">
-            <Button color="primary">Back</Button>
+            <Button
+              color="primary"
+              onClick={this.handleBackClick}
+            >
+              Back
+            </Button>
           </Col>
           <Col md="2" />
         </Row>
