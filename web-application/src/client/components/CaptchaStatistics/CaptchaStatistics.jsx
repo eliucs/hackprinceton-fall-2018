@@ -75,8 +75,8 @@ const mapCountryToFreq = {
   CHN: 2,
 };
 
-const dummySuccess = 50;
-const dummyFailure = 30;
+const dummySuccess = 0;
+const dummyFailure = 0;
 
 class CaptchaStatistics extends React.Component {
   constructor(props) {

@@ -23,10 +23,6 @@
   color: #B71C1C;
 }
 
-:local(.sectionRow) {
-  margin-bottom: 1em;
-}
-
 :local(.containerIpAddresses) {
   height: 15em;
   overflow-x: hidden;
@@ -38,7 +34,6 @@
   height: auto;
 }
 
-// IPAddressListings
 :local(.subcomponent) {
   margin-bottom: 1em;
 }

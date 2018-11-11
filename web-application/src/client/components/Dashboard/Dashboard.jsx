@@ -1,32 +1,58 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { sectionHeader } from './styles.scss';
+import { Container } from 'reactstrap';
+import uuid from 'uuid';
 
-import { Button, Container, Col, Row } from 'reactstrap';
+import CreateCaptcha from './CreateCaptcha';
+import ExistingCaptchaListings from './ExistingCaptchaListings';
 
-const Dashboard = props => (
-  <Container fluid>
-    <Row>
-      <Col md="2" />
-      <Col md="8">
-        <div className={sectionHeader}>Create new audioCAPTCHA</div>
-        <Button color="primary">+ Create New</Button>
-      </Col>
-      <Col md="2" />
-    </Row>
+const dummyCaptchaData = [
+  {
+    id: uuid(),
+    dateCreated: '01-01-2018',
+  },
+  {
+    id: uuid(),
+    dateCreated: '01-02-2018',
+  },
+  {
+    id: uuid(),
+    dateCreated: '01-03-2018',
+  },
+  {
+    id: uuid(),
+    dateCreated: '01-04-2018',
+  },
+  {
+    id: uuid(),
+    dateCreated: '01-05-2018',
+  },
+];
 
-    <Row>
-      <Col md="2" />
-      <Col md="8">
-        <div className={sectionHeader}>My Existing audioCAPTCHA</div>
-      </Col>
-      <Col md="2" />
-    </Row>
-  </Container>
-);
+class Dashboard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
-Dashboard.propTypes = {
-  title: PropTypes.string,
-};
+  handleCreateNewCaptcha = () => {
+    console.log('create new captcha');
+  };
+
+  render() {
+    return (
+      <Container fluid>
+        <CreateCaptcha
+          title="Create new audioCAPTCHA"
+          handleCreateNewCaptcha={this.handleCreateNewCaptcha}
+        />
+
+        <ExistingCaptchaListings
+          title="My Existing audioCAPTCHA"
+          data={dummyCaptchaData}
+        />
+      </Container>
+    );
+  }
+}
 
 export default Dashboard;
