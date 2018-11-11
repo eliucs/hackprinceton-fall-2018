@@ -1,5 +1,39 @@
-:local(.appStyles) {
-  h1 {
-    color: blue;
+:local(.card) {
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  padding: 1em;
+  min-width: 400px;
+}
+
+:local(.cardTitle) {
+  font-weight: 500;
+  font-size: 1.5em;
+  margin-bottom: 1em;
+  text-align: center;
+}
+
+:local(.parentMainPage) {
+  background: #0D47A1;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+:local(.invalid) {
+  color: #B71C1C;
+  margin-bottom: 0.5em;
+}
+
+:local(.btnSignup) {
+  margin-bottom: 0.5em;
+}
+
+:local(.linkLogin) {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
   }
 }
