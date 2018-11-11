@@ -1,12 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Container,
-  Col,
-  Row,
-  Button,
-} from 'reactstrap';
+import { Container } from 'reactstrap';
 
+import BackButton from './BackButton';
 import SuccessFailureRatesDisplay from './SuccessFailureRatesDisplay';
 import TrafficTimeseries from './TrafficTimeseries';
 import WorldwideTrafficData from './WorldwideTrafficData';
@@ -96,18 +92,9 @@ class CaptchaStatistics extends React.Component {
   render() {
     return (
       <Container fluid>
-        <Row>
-          <Col md="2" />
-          <Col md="8">
-            <Button
-              color="primary"
-              onClick={this.handleBackClick}
-            >
-              Back
-            </Button>
-          </Col>
-          <Col md="2" />
-        </Row>
+        <BackButton
+          handleBackClick={this.handleBackClick}
+        />
 
         <SuccessFailureRatesDisplay
           titleSuccess="Success Rate"
