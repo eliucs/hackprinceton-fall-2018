@@ -2,6 +2,7 @@ import React from 'react';
 import { Container } from 'reactstrap';
 import uuid from 'uuid';
 
+import NavBar from 'components/NavBar';
 import CreateCaptcha from './CreateCaptcha';
 import ExistingCaptchaListings from './ExistingCaptchaListings';
 
@@ -44,17 +45,20 @@ class Dashboard extends React.Component {
 
   render() {
     return (
-      <Container fluid className={containerDashboard}>
-        <CreateCaptcha
-          title="Create new audioCAPTCHA"
-          handleCreateNewCaptcha={this.handleCreateNewCaptcha}
-        />
+      <div>
+        <NavBar />
+        <Container fluid className={containerDashboard}>
+          <CreateCaptcha
+            title="Create new audioCAPTCHA"
+            handleCreateNewCaptcha={this.handleCreateNewCaptcha}
+          />
 
-        <ExistingCaptchaListings
-          title="My Existing audioCAPTCHA"
-          data={dummyCaptchaData}
-        />
-      </Container>
+          <ExistingCaptchaListings
+            title="My Existing audioCAPTCHA"
+            data={dummyCaptchaData}
+          />
+        </Container>
+      </div>
     );
   }
 }

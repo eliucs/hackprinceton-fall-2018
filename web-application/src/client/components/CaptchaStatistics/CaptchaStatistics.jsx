@@ -2,6 +2,7 @@ import React from 'react';
 import { Container } from 'reactstrap';
 import { Redirect } from 'react-router-dom';
 
+import NavBar from 'components/NavBar';
 import BackButton from './BackButton';
 import SuccessFailureRatesDisplay from './SuccessFailureRatesDisplay';
 import TrafficTimeseries from './TrafficTimeseries';
@@ -107,34 +108,37 @@ class CaptchaStatistics extends React.Component {
     }
 
     return (
-      <Container fluid className={containerCaptchaStatistics}>
-        <BackButton
-          handleBackClick={this.handleBackClick}
-        />
+      <div>
+        <NavBar />
+        <Container fluid className={containerCaptchaStatistics}>
+          <BackButton
+            handleBackClick={this.handleBackClick}
+          />
 
-        <SuccessFailureRatesDisplay
-          titleSuccess="Success Rate"
-          titleFailure="Failure Rate"
-          numSuccess={dummySuccess}
-          numFailure={dummyFailure}
-        />
+          <SuccessFailureRatesDisplay
+            titleSuccess="Success Rate"
+            titleFailure="Failure Rate"
+            numSuccess={dummySuccess}
+            numFailure={dummyFailure}
+          />
 
-        <TrafficTimeseries
-          title="Traffic Over Time"
-          data={dummyTimeseriesData}
-        />
+          <TrafficTimeseries
+            title="Traffic Over Time"
+            data={dummyTimeseriesData}
+          />
 
-        <WorldwideTrafficData
-          title="Worldwide Traffic Data"
-          mapCountryToFreq={mapCountryToFreq}
-        />
+          <WorldwideTrafficData
+            title="Worldwide Traffic Data"
+            mapCountryToFreq={mapCountryToFreq}
+          />
 
-        <IPAddressListings
-          title="Traffic by IP Address"
-          data={dummyIpData}
-          maxDataLimit={100}
-        />
-      </Container>
+          <IPAddressListings
+            title="Traffic by IP Address"
+            data={dummyIpData}
+            maxDataLimit={100}
+          />
+        </Container>
+      </div>
     );
   }
 }

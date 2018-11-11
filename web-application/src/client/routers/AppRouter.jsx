@@ -15,42 +15,53 @@ import SignupPage from 'components/SignupPage';
 /**
  * Renders the AppRouter stateless functional component.
  */
-const AppRouter = () => (
-  <BrowserRouter>
-    <div>
-      <NavBar />
-      <Switch>
-        <Route
-          path="/"
-          component={() => <MainPage title="main page" />}
-          exact
-        />
+class AppRouter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showNavbar: false,
+    };
+  }
 
-        <Route
-          path="/dashboard"
-          component={() => <Dashboard />}
-          exact
-        />
+  render() {
+    return (
+      <BrowserRouter>
+        <div>
+          { this.state.showNavbar && <NavBar /> }
+          <Switch>
+            <Route
+              path="/"
+              component={() => <MainPage />}
+              exact
+            />
 
-        <Route
-          path="/dashboard/:captchaId"
-          component={() => <CaptchaStatistics />}
-          exact
-        />
+            <Route
+              path="/signup"
+              component={() => <SignupPage />}
+              exact
+            />
 
-        <Route
-          path="/signup"
-          component={() => <SignupPage title="signup" />}
-          exact
-        />
+            <Route
+              path="/dashboard"
+              component={() => <Dashboard />}
+              exact
+            />
 
-        <Route
-          path="*"
-          component={() => <Redirect to="/" />}
-        />
-      </Switch>
-    </div>
-  </BrowserRouter>
-);
+            <Route
+              path="/dashboard/:captchaId"
+              component={() => <CaptchaStatistics />}
+              exact
+            />
+
+            <Route
+              path="*"
+              component={() => <Redirect to="/" />}
+            />
+          </Switch>
+        </div>
+      </BrowserRouter>
+    );
+  }
+}
 
 export default AppRouter;

@@ -4,7 +4,6 @@ import { appStyles } from './styles.scss';
 
 const MainPage = props => (
   <div className={appStyles}>
-    <h1>{props.title}</h1>
   </div>
 );
 
