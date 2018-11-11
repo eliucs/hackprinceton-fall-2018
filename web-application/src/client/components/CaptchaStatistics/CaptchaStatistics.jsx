@@ -1,11 +1,16 @@
 import React from 'react';
 import { Container } from 'reactstrap';
+import { Redirect } from 'react-router-dom';
 
 import BackButton from './BackButton';
 import SuccessFailureRatesDisplay from './SuccessFailureRatesDisplay';
 import TrafficTimeseries from './TrafficTimeseries';
 import WorldwideTrafficData from './WorldwideTrafficData';
 import IPAddressListings from './IPAddressListings';
+
+import {
+  containerCaptchaStatistics,
+} from './styles.scss';
 
 function randomData() {
   return Math.floor(Math.random() * 5);
@@ -81,16 +86,28 @@ const dummyFailure = 0;
 class CaptchaStatistics extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      goBack: false,
+    };
+  }
+
+  componentDidMount() {
+    // Make requests to get the data from Firebase
   }
 
   handleBackClick = () => {
-    console.log('test');
+    this.setState({ goBack: true });
   };
 
   render() {
+    if (this.state.goBack) {
+      return (
+        <Redirect to="/dashboard" />
+      );
+    }
+
     return (
-      <Container fluid>
+      <Container fluid className={containerCaptchaStatistics}>
         <BackButton
           handleBackClick={this.handleBackClick}
         />

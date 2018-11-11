@@ -5,6 +5,10 @@ import uuid from 'uuid';
 import CreateCaptcha from './CreateCaptcha';
 import ExistingCaptchaListings from './ExistingCaptchaListings';
 
+import {
+  containerDashboard,
+} from './styles.scss';
+
 const dummyCaptchaData = [
   {
     id: uuid(),
@@ -40,7 +44,7 @@ class Dashboard extends React.Component {
 
   render() {
     return (
-      <Container fluid>
+      <Container fluid className={containerDashboard}>
         <CreateCaptcha
           title="Create new audioCAPTCHA"
           handleCreateNewCaptcha={this.handleCreateNewCaptcha}

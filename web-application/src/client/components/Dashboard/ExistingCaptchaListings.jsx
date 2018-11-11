@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import {
   Container,
   Col,
@@ -10,6 +11,8 @@ import {
 import {
   card,
   cardTitle,
+  containerCaptchaListings,
+  link,
   subcomponent,
 } from './styles.scss';
 
@@ -25,24 +28,30 @@ const ExistingCaptchaListings = props => (
       <Col md="8">
         <div className={card}>
           <div className={cardTitle}>{props.title}</div>
-          <Table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Date Created</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                props.data.map((captchaData, i) => (
-                  <tr key={i}>
-                    <td>{captchaData.id}</td>
-                    <td>{captchaData.dateCreated}</td>
-                  </tr>
-                ))
-              }
-            </tbody>
-          </Table>
+          <div className={containerCaptchaListings}>
+            <Table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Date Created</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  props.data.map((captchaData, i) => (
+                    <tr key={i}>
+                      <td>
+                        <Link className={link} to={`/dashboard/${captchaData.id}`}>
+                          {captchaData.id}
+                        </Link>
+                      </td>
+                      <td>{captchaData.dateCreated}</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </Table>
+          </div>
         </div>
       </Col>
       <Col md="2" />

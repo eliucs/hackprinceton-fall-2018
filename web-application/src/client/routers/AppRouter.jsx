@@ -6,6 +6,7 @@ import {
   Redirect,
 } from 'react-router-dom';
 
+import NavBar from 'components/NavBar';
 import MainPage from 'components/MainPage';
 import Dashboard from 'components/Dashboard';
 import CaptchaStatistics from 'components/CaptchaStatistics';
@@ -17,6 +18,7 @@ import SignupPage from 'components/SignupPage';
 const AppRouter = () => (
   <BrowserRouter>
     <div>
+      <NavBar />
       <Switch>
         <Route
           path="/"
@@ -26,13 +28,13 @@ const AppRouter = () => (
 
         <Route
           path="/dashboard"
-          component={() => <Dashboard title="dashboard" />}
+          component={() => <Dashboard />}
           exact
         />
 
         <Route
           path="/dashboard/:captchaId"
-          component={() => <CaptchaStatistics title="captcha statistics" />}
+          component={() => <CaptchaStatistics />}
           exact
         />
 
