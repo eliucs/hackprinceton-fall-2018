@@ -6,12 +6,13 @@ import {
   Table,
   Row,
 } from 'reactstrap';
+
 import {
   card,
   cardTitle,
   containerIpAddresses,
   subcomponent,
-} from 'styles.scss';
+} from './styles.scss';
 
 /**
  * Renders the IPAddressListings stateless functional component.
@@ -68,10 +69,3 @@ IPAddressListings.propTypes = {
 };
 
 export default IPAddressListings;
-
-// title: Traffic by IP Address
-// data:
-//   ip: string
-//   data: Date
-//   countryCode: string
-//   countryName: string
