@@ -32,17 +32,23 @@ class NavBar extends React.Component {
   // TODO: Determine when the user is logged in/out
 
   render() {
+    // return (
+    //   <Navbar className={navbar} dark expand="md">
+    //     <NavbarBrand href="/">audioCAPTCHA</NavbarBrand>
+    //     <NavbarToggler onClick={this.toggle} />
+    //     <Collapse isOpen={this.state.isOpen} navbar>
+    //       <Nav className="ml-auto" navbar>
+    //         <NavItem>
+    //           <NavLink href="/">Log Out</NavLink>
+    //         </NavItem>
+    //       </Nav>
+    //     </Collapse>
+    //   </Navbar>
+    // );
     return (
       <Navbar className={navbar} dark expand="md">
         <NavbarBrand href="/">audioCAPTCHA</NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
-        <Collapse isOpen={this.state.isOpen} navbar>
-          <Nav className="ml-auto" navbar>
-            <NavItem>
-              <NavLink href="/">Log Out</NavLink>
-            </NavItem>
-          </Nav>
-        </Collapse>
       </Navbar>
     );
   }
