@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Container } from 'reactstrap';
 
 import BackButton from './BackButton';
@@ -122,7 +121,5 @@ class CaptchaStatistics extends React.Component {
     );
   }
 }
-
-CaptchaStatistics.propTypes = {};
 
 export default CaptchaStatistics;
